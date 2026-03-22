@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JS Pro MZ — Aprende JavaScript em Moçambique</title>
+<meta name="description" content="A plataforma número 1 de aprendizagem de JavaScript em Moçambique. Aprende com exercícios práticos, quizzes e projectos reais.">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --black:#050507;
+  --dark:#0c0c10;
+  --card:#111118;
+  --border:#1c1c28;
+  --yellow:#f7df1e;
+  --yellow-dim:#c9b800;
+  --white:#f0f0f8;
+  --muted:#6b6b80;
+  --green:#22c55e;
+  --blue:#38bdf8;
+  --code:#0a0a0e;
+}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--black);
+  color:var(--white);
+  font-family:'Segoe UI',system-ui,sans-serif;
+  line-height:1.6;
+  overflow-x:hidden;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:3px;}
+::-webkit-scrollbar-track{background:var(--black);}
+::-webkit-scrollbar-thumb{background:var(--yellow);border-radius:2px;}
+
+/* ═══════════════════════════════
+   NAVBAR
+═══════════════════════════════ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(5,5,7,0.92);
+  border-bottom:1px solid var(--border);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+}
+.nav-inner{
+  max-width:1100px;margin:0 auto;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:0 20px;height:64px;
+}
+.nav-logo{
+  font-size:22px;font-weight:800;letter-spacing:-0.5px;
+  text-decoration:none;
+}
+.nav-logo .js{color:var(--yellow);}
+.nav-logo .rest{color:var(--white);}
+.nav-links{display:flex;align-items:center;gap:8px;}
+.nav-link{
+  color:var(--muted);font-size:14px;font-weight:500;
+  text-decoration:none;padding:8px 14px;border-radius:8px;
+  transition:all 0.2s;
+}
+.nav-link:hover{color:var(--white);background:var(--card);}
+.nav-cta{
+  background:var(--yellow);color:#000;
+  font-size:14px;font-weight:700;
+  padding:9px 20px;border-radius:8px;
+  border:none;cursor:pointer;
+  font-family:inherit;
+  transition:opacity 0.2s,transform 0.1s;
+}
+.nav-cta:hover{opacity:0.88;}
+.nav-cta:active{transform:scale(0.97);}
+
+/* ═══════════════════════════════
+   HERO
+═══════════════════════════════ */
+.hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:100px 20px 60px;
+  max-width:700px;margin:0 auto;
+  position:relative;
+}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(247,223,30,0.08);
+  border:1px solid rgba(247,223,30,0.2);
+  border-radius:100px;
+  padding:6px 14px;font-size:12px;
+  color:var(--yellow);letter-spacing:1.5px;
+  text-transform:uppercase;font-weight:600;
+  margin-bottom:28px;width:fit-content;
+}
+.hero-eyebrow::before{
+  content:'';width:6px;height:6px;
+  background:var(--yellow);border-radius:50%;
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.5;transform:scale(0.8);}}
+.hero h1{
+  font-size:clamp(40px,8vw,72px);
+  font-weight:800;line-height:1.05;
+  letter-spacing:-2px;
+  margin-bottom:24px;
+}
+.hero h1 .accent{
+  color:var(--yellow);
+  position:relative;display:inline-block;
+}
+.hero h1 .accent::after{
+  content:'';
+  position:absolute;bottom:-4px;left:0;right:0;
+  height:3px;background:var(--yellow);
+  border-radius:2px;opacity:0.4;
+}
+.hero-desc{
+  font-size:18px;color:var(--muted);
+  max-width:560px;margin-bottom:40px;line-height:1.7;
+}
+.hero-desc strong{color:var(--white);}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:60px;}
+.btn-primary{
+  background:var(--yellow);color:#000;
+  font-size:15px;font-weight:700;
+  padding:14px 28px;border-radius:10px;
+  border:none;cursor:pointer;font-family:inherit;
+  transition:all 0.2s;letter-spacing:0.3px;
+}
+.btn-primary:hover{opacity:0.88;transform:translateY(-1px);}
+.btn-secondary{
+  background:transparent;color:var(--white);
+  font-size:15px;font-weight:600;
+  padding:14px 28px;border-radius:10px;
+  border:1px solid var(--border);cursor:pointer;
+  font-family:inherit;transition:all 0.2s;
+}
+.btn-secondary:hover{border-color:var(--yellow);color:var(--yellow);}
+
+/* HERO STATS */
+.hero-stats{
+  display:flex;gap:0;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:14px;overflow:hidden;
+  width:fit-content;
+}
+.hstat{
+  padding:20px 28px;
+  border-right:1px solid var(--border);
+}
+.hstat:last-child{border-right:none;}
+.hstat-n{
+  font-size:28px;font-weight:800;
+  color:var(--yellow);letter-spacing:-1px;
+  font-variant-numeric:tabular-nums;
+}
+.hstat-l{font-size:12px;color:var(--muted);margin-top:2px;letter-spacing:0.5px;}
+
+/* BG GRID */
+.hero::before{
+  content:'';
+  position:fixed;top:0;left:0;right:0;bottom:0;
+  background-image:
+    linear-gradient(rgba(247,223,30,0.025) 1px, transparent 1px),
+    linear-gradient(90deg,rgba(247,223,30,0.025) 1px, transparent 1px);
+  background-size:64px 64px;
+  pointer-events:none;z-index:-1;
+}
+
+/* ═══════════════════════════════
+   SECTIONS
+═══════════════════════════════ */
+.section{padding:100px 20px;max-width:1100px;margin:0 auto;}
+.section-label{
+  font-size:11px;letter-spacing:4px;text-transform:uppercase;
+  color:var(--yellow);margin-bottom:12px;font-weight:600;
+}
+.section-title{
+  font-size:clamp(28px,5vw,46px);font-weight:800;
+  letter-spacing:-1.5px;line-height:1.1;margin-bottom:16px;
+}
+.section-desc{font-size:16px;color:var(--muted);max-width:520px;line-height:1.7;}
+
+/* DIVIDER */
+.divider{height:1px;background:var(--border);margin:0 20px;}
+
+/* ═══════════════════════════════
+   CODE WINDOW
+═══════════════════════════════ */
+.code-window{
+  background:var(--code);border:1px solid var(--border);
+  border-radius:16px;overflow:hidden;
+  margin-top:48px;
+  box-shadow:0 32px 80px rgba(0,0,0,0.5);
+}
+.code-titlebar{
+  background:#111116;border-bottom:1px solid var(--border);
+  padding:12px 16px;display:flex;align-items:center;gap:8px;
+}
+.dot{width:12px;height:12px;border-radius:50%;}
+.dot-r{background:#ff5f57;}.dot-y{background:#febc2e;}.dot-g{background:#28c840;}
+.code-filename{font-size:12px;color:var(--muted);margin-left:10px;font-family:'Courier New',monospace;}
+.code-body{padding:24px;font-family:'Courier New',monospace;font-size:14px;line-height:1.8;overflow-x:auto;}
+.kw{color:#c084fc;}.fn{color:#38bdf8;}.str{color:#86efac;}
+.num{color:#f7df1e;}.cm{color:#334155;}.op{color:#f97316;}
+.var{color:#f0f0f8;}
+.line{display:block;}
+.cursor-blink{
+  display:inline-block;width:2px;height:15px;
+  background:var(--yellow);vertical-align:middle;margin-left:2px;
+  animation:blink 1.1s step-end infinite;
+}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+
+/* ═══════════════════════════════
+   FEATURES GRID
+═══════════════════════════════ */
+.features-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:2px;margin-top:60px;
+  border:1px solid var(--border);border-radius:16px;overflow:hidden;
+}
+.feat{
+  background:var(--card);padding:36px 32px;
+  transition:background 0.2s;
+  border-right:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+}
+.feat:hover{background:#141420;}
+.feat-icon{
+  width:48px;height:48px;border-radius:12px;
+  background:rgba(247,223,30,0.08);border:1px solid rgba(247,223,30,0.15);
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;margin-bottom:20px;
+}
+.feat h3{font-size:17px;font-weight:700;margin-bottom:8px;letter-spacing:-0.3px;}
+.feat p{font-size:14px;color:var(--muted);line-height:1.6;}
+
+/* ═══════════════════════════════
+   CURRICULUM
+═══════════════════════════════ */
+.curriculum{margin-top:60px;display:flex;flex-direction:column;gap:2px;}
+.module{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:0;padding:0;overflow:hidden;
+  transition:border-color 0.2s;
+}
+.module:first-child{border-radius:14px 14px 0 0;}
+.module:last-child{border-radius:0 0 14px 14px;}
+.module:hover{border-color:#2c2c3c;}
+.module-header{
+  padding:22px 24px;display:flex;align-items:center;
+  gap:16px;cursor:pointer;
+}
+.module-num{
+  width:36px;height:36px;border-radius:8px;
+  font-size:13px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;font-variant-numeric:tabular-nums;
+}
+.mn-1{background:rgba(247,223,30,0.12);color:var(--yellow);}
+.mn-2{background:rgba(56,189,248,0.12);color:var(--blue);}
+.mn-3{background:rgba(34,197,94,0.12);color:var(--green);}
+.mn-4{background:rgba(249,115,22,0.12);color:#f97316;}
+.mn-5{background:rgba(168,85,247,0.12);color:#a855f7;}
+.mn-6{background:rgba(236,72,153,0.12);color:#ec4899;}
+.module-info{flex:1;}
+.module-title{font-size:16px;font-weight:700;margin-bottom:3px;}
+.module-sub{font-size:13px;color:var(--muted);}
+.module-tag{
+  font-size:11px;font-weight:700;padding:4px 10px;
+  border-radius:6px;letter-spacing:1px;flex-shrink:0;
+}
+.tag-free{background:rgba(34,197,94,0.1);color:var(--green);border:1px solid rgba(34,197,94,0.2);}
+.tag-pro{background:rgba(247,223,30,0.1);color:var(--yellow);border:1px solid rgba(247,223,30,0.2);}
+
+/* ═══════════════════════════════
+   PRICING
+═══════════════════════════════ */
+.pricing-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:16px;margin-top:60px;max-width:700px;
+}
+@media(max-width:600px){.pricing-grid{grid-template-columns:1fr;}}
+.plan{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;padding:32px;position:relative;overflow:hidden;
+}
+.plan.featured{border-color:var(--yellow);}
+.plan.featured::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--yellow),#f97316);
+}
+.plan-badge{
+  position:absolute;top:16px;right:16px;
+  background:var(--yellow);color:#000;
+  font-size:10px;font-weight:800;padding:3px 8px;
+  border-radius:6px;letter-spacing:1px;
+}
+.plan-name{font-size:13px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;}
+.plan-price{font-size:42px;font-weight:800;letter-spacing:-2px;line-height:1;margin-bottom:4px;}
+.plan-price .curr{font-size:18px;vertical-align:top;padding-top:8px;display:inline-block;}
+.plan-period{font-size:13px;color:var(--muted);margin-bottom:28px;}
+.plan-features{list-style:none;margin-bottom:28px;display:flex;flex-direction:column;gap:10px;}
+.plan-features li{font-size:14px;display:flex;align-items:center;gap:10px;}
+.plan-features li .ic{font-size:14px;}
+.plan-features li .on{color:var(--white);}
+.plan-features li .off{color:var(--muted);}
+.plan-btn-free{
+  width:100%;padding:13px;border-radius:10px;
+  border:1px solid var(--border);background:transparent;
+  color:var(--white);font-size:14px;font-weight:600;
+  cursor:pointer;font-family:inherit;transition:all 0.2s;
+}
+.plan-btn-free:hover{border-color:var(--white);}
+.plan-btn-pro{
+  width:100%;padding:13px;border-radius:10px;
+  border:none;background:var(--yellow);
+  color:#000;font-size:14px;font-weight:700;
+  cursor:pointer;font-family:inherit;transition:all 0.2s;
+}
+.plan-btn-pro:hover{opacity:0.88;}
+
+/* ═══════════════════════════════
+   TESTIMONIALS
+═══════════════════════════════ */
+.testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:60px;}
+.testi{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;}
+.testi-stars{color:var(--yellow);font-size:14px;letter-spacing:3px;margin-bottom:14px;}
+.testi-text{font-size:15px;color:#c0c0d0;line-height:1.7;margin-bottom:20px;font-style:italic;}
+.testi-author{display:flex;align-items:center;gap:12px;}
+.testi-avatar{
+  width:40px;height:40px;border-radius:50%;
+  background:rgba(247,223,30,0.1);border:1px solid rgba(247,223,30,0.2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;font-weight:800;color:var(--yellow);
+}
+.testi-name{font-size:14px;font-weight:700;}
+.testi-role{font-size:12px;color:var(--muted);}
+
+/* ═══════════════════════════════
+   CTA SECTION
+═══════════════════════════════ */
+.cta-section{
+  margin:0 20px 80px;
+  background:linear-gradient(135deg,#13130e,#0c0c08);
+  border:1px solid rgba(247,223,30,0.15);
+  border-radius:20px;padding:60px 40px;text-align:center;
+  position:relative;overflow:hidden;
+  max-width:1060px;margin-left:auto;margin-right:auto;
+}
+.cta-section::before{
+  content:'';position:absolute;
+  top:-80px;left:50%;transform:translateX(-50%);
+  width:300px;height:300px;border-radius:50%;
+  background:rgba(247,223,30,0.06);
+  filter:blur(60px);pointer-events:none;
+}
+.cta-section h2{font-size:clamp(28px,5vw,48px);font-weight:800;letter-spacing:-1.5px;margin-bottom:14px;}
+.cta-section p{font-size:16px;color:var(--muted);margin-bottom:32px;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.7;}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+
+/* ═══════════════════════════════
+   FOOTER
+═══════════════════════════════ */
+footer{
+  border-top:1px solid var(--border);
+  padding:40px 20px;max-width:1100px;margin:0 auto;
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:16px;
+}
+.footer-logo{font-size:18px;font-weight:800;}
+.footer-logo .js{color:var(--yellow);}
+.footer-text{font-size:13px;color:var(--muted);}
+.footer-flag{font-size:13px;color:var(--muted);}
+
+/* ═══════════════════════════════
+   MODALS & APP
+═══════════════════════════════ */
+.modal-overlay{
+  display:none;position:fixed;top:0;left:0;right:0;bottom:0;
+  background:rgba(0,0,0,0.88);z-index:200;
+  align-items:center;justify-content:center;padding:20px;
+  backdrop-filter:blur(4px);
+}
+.modal-overlay.show{display:flex;}
+.modal{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:20px;padding:32px;width:100%;max-width:420px;
+  position:relative;
+}
+.modal-close{
+  position:absolute;top:16px;right:16px;
+  background:var(--dark);border:1px solid var(--border);
+  color:var(--muted);width:32px;height:32px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:16px;
+}
+.modal h3{font-size:22px;font-weight:800;letter-spacing:-0.5px;margin-bottom:6px;}
+.modal-sub{font-size:13px;color:var(--muted);margin-bottom:24px;}
+.field-label{font-size:11px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;font-weight:600;}
+.field-input{
+  width:100%;background:var(--dark);
+  border:1px solid var(--border);border-radius:10px;
+  color:var(--white);padding:13px 16px;
+  font-size:15px;font-family:'Courier New',monospace;
+  outline:none;margin-bottom:16px;
+  transition:border-color 0.2s;letter-spacing:2px;text-align:center;
+}
+.field-input:focus{border-color:var(--yellow);}
+.field-err{color:#f87171;font-size:12px;margin-bottom:12px;display:none;text-align:center;}
+.field-err.show{display:block;}
+.modal-btn{
+  width:100%;padding:14px;border-radius:10px;border:none;
+  background:var(--yellow);color:#000;
+  font-size:15px;font-weight:700;cursor:pointer;
+  font-family:inherit;margin-bottom:10px;transition:opacity 0.2s;
+}
+.modal-btn:hover{opacity:0.88;}
+.modal-btn-ghost{
+  width:100%;padding:12px;border-radius:10px;
+  border:1px solid var(--border);background:transparent;
+  color:var(--muted);font-size:13px;cursor:pointer;font-family:inherit;
+}
+.modal-step{
+  background:var(--dark);border-radius:10px;
+  padding:12px 14px;margin-bottom:10px;
+  font-size:13px;color:#c0c0d0;line-height:1.6;
+  border-left:3px solid var(--yellow);
+}
+.modal-step strong{color:var(--yellow);}
+.wp-btn{
+  width:100%;padding:14px;border-radius:10px;border:none;
+  background:#25d366;color:#fff;font-size:15px;font-weight:700;
+  cursor:pointer;font-family:inherit;margin-bottom:10px;
+}
+.admin-small{text-align:center;font-size:11px;color:#1c1c28;cursor:pointer;margin-top:14px;}
+.admin-small:hover{color:#444;}
+
+/* APP */
+#mainApp{display:none;min-height:100vh;}
+.app-nav{
+  position:sticky;top:0;z-index:50;
+  background:rgba(5,5,7,0.95);
+  border-bottom:1px solid var(--border);
+  backdrop-filter:blur(12px);
+}
+.app-nav-inner{
+  max-width:900px;margin:0 auto;padding:0 20px;height:60px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.app-logo{font-size:18px;font-weight:800;}
+.app-logo .js{color:var(--yellow);}
+.app-right{display:flex;align-items:center;gap:10px;}
+.plan-chip{
+  font-size:11px;font-weight:700;padding:4px 10px;
+  border-radius:6px;letter-spacing:1px;
+}
+.chip-free{background:rgba(34,197,94,0.1);color:var(--green);border:1px solid rgba(34,197,94,0.2);}
+.chip-pro{background:rgba(247,223,30,0.1);color:var(--yellow);border:1px solid rgba(247,223,30,0.2);}
+.app-logout{
+  background:transparent;border:1px solid var(--border);
+  color:var(--muted);padding:6px 12px;border-radius:8px;
+  font-size:12px;cursor:pointer;font-family:inherit;
+}
+.app-content{max-width:900px;margin:0 auto;padding:40px 20px;}
+.app-hero{margin-bottom:40px;}
+.app-hello{font-size:26px;font-weight:800;letter-spacing:-0.5px;margin-bottom:6px;}
+.app-hello span{color:var(--yellow);}
+.app-sub{font-size:14px;color:var(--muted);}
+.progress-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:14px;padding:24px;margin-bottom:32px;
+}
+.prog-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+.prog-title{font-size:15px;font-weight:700;}
+.prog-pct{font-size:15px;font-weight:800;color:var(--yellow);}
+.prog-bar{height:6px;background:var(--dark);border-radius:3px;overflow:hidden;margin-bottom:12px;}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--yellow),#f97316);border-radius:3px;transition:width 0.6s;}
+.prog-stats{display:flex;gap:20px;}
+.prog-stat{font-size:13px;color:var(--muted);}
+.prog-stat span{color:var(--white);font-weight:700;}
+.modules-title{font-size:18px;font-weight:800;margin-bottom:16px;letter-spacing:-0.3px;}
+.app-modules{display:flex;flex-direction:column;gap:10px;}
+.app-mod{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:12px;padding:18px 20px;
+  display:flex;align-items:center;gap:14px;
+  cursor:pointer;transition:all 0.2s;
+}
+.app-mod:hover{border-color:rgba(247,223,30,0.3);transform:translateX(4px);}
+.app-mod.locked{opacity:0.55;cursor:default;}
+.app-mod.locked:hover{transform:none;border-color:var(--border);}
+.mod-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.mod-info-wrap{flex:1;}
+.mod-name{font-size:15px;font-weight:700;margin-bottom:2px;}
+.mod-meta{font-size:12px;color:var(--muted);}
+.mod-done{font-size:12px;color:var(--green);font-weight:600;}
+
+/* LESSON VIEW */
+#lessonView{display:none;}
+.lesson-nav{display:flex;align-items:center;gap:14px;margin-bottom:28px;}
+.back-btn{
+  background:var(--card);border:1px solid var(--border);
+  color:var(--white);padding:9px 16px;border-radius:10px;
+  font-size:13px;cursor:pointer;font-family:inherit;
+  display:flex;align-items:center;gap:6px;
+  transition:border-color 0.2s;
+}
+.back-btn:hover{border-color:var(--yellow);}
+.lesson-heading{font-size:20px;font-weight:800;letter-spacing:-0.3px;}
+.lesson-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:14px;padding:24px;margin-bottom:16px;
+}
+.lesson-card h4{font-size:16px;color:var(--yellow);font-weight:700;margin-bottom:12px;}
+.lesson-card p{font-size:14px;color:#b0b0c0;line-height:1.8;margin-bottom:14px;}
+.lesson-code-block{
+  background:var(--code);border:1px solid var(--border);border-radius:10px;
+  padding:18px;font-family:'Courier New',monospace;font-size:13px;
+  line-height:1.8;margin-bottom:16px;overflow-x:auto;
+  white-space:pre;color:#e0e0f0;
+}
+.exercise-label{font-size:11px;color:var(--yellow);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;font-weight:600;}
+.exercise-desc{font-size:14px;color:#b0b0c0;margin-bottom:12px;line-height:1.6;}
+.code-editor{
+  width:100%;background:var(--code);border:1px solid var(--border);
+  border-radius:10px;color:var(--white);padding:16px;
+  font-family:'Courier New',monospace;font-size:13px;
+  outline:none;resize:vertical;min-height:110px;
+  margin-bottom:10px;transition:border-color 0.2s;line-height:1.8;
+}
+.code-editor:focus{border-color:var(--yellow);}
+.run-code-btn{
+  background:var(--yellow);color:#000;
+  border:none;padding:11px 22px;border-radius:8px;
+  font-size:14px;font-weight:700;cursor:pointer;
+  font-family:inherit;margin-bottom:12px;
+}
+.output{
+  background:#05100a;border:1px solid rgba(34,197,94,0.2);
+  border-radius:10px;padding:14px;
+  font-family:'Courier New',monospace;font-size:13px;
+  color:var(--green);min-height:48px;display:none;line-height:1.8;
+}
+.output.show{display:block;}
+.quiz-block{
+  background:var(--dark);border:1px solid var(--border);
+  border-radius:12px;padding:20px;margin-top:14px;
+}
+.quiz-q-label{font-size:11px;color:var(--yellow);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;font-weight:600;}
+.quiz-question{font-size:14px;margin-bottom:14px;line-height:1.6;}
+.quiz-options{display:flex;flex-direction:column;gap:8px;}
+.quiz-opt{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:8px;padding:11px 16px;font-size:14px;
+  cursor:pointer;color:var(--white);text-align:left;
+  font-family:inherit;transition:all 0.2s;
+}
+.quiz-opt:hover:not(:disabled){border-color:var(--yellow);color:var(--yellow);}
+.quiz-opt.correct{border-color:var(--green);color:var(--green);background:rgba(34,197,94,0.08);}
+.quiz-opt.wrong{border-color:#f87171;color:#f87171;background:rgba(248,113,113,0.08);}
+.quiz-feedback{font-size:13px;margin-top:12px;padding:10px 14px;border-radius:8px;display:none;line-height:1.5;}
+.quiz-feedback.show{display:block;}
+.quiz-feedback.ok{background:rgba(34,197,94,0.08);color:var(--green);border:1px solid rgba(34,197,94,0.2);}
+.quiz-feedback.no{background:rgba(248,113,113,0.08);color:#f87171;border:1px solid rgba(248,113,113,0.2);}
+.locked-card{
+  background:linear-gradient(135deg,#13130e,#0c0c08);
+  border:1px solid rgba(247,223,30,0.15);border-radius:14px;
+  padding:40px;text-align:center;
+}
+.locked-card h3{font-size:22px;font-weight:800;margin-bottom:8px;}
+.locked-card p{font-size:14px;color:var(--muted);margin-bottom:24px;line-height:1.7;}
+.unlock-btn{
+  background:var(--yellow);color:#000;border:none;
+  padding:14px 28px;border-radius:10px;font-size:15px;
+  font-weight:700;cursor:pointer;font-family:inherit;
+}
+
+/* ADMIN PANEL */
+#adminPanel{
+  display:none;position:fixed;top:0;left:0;right:0;bottom:0;
+  background:rgba(0,0,0,0.97);z-index:300;overflow-y:auto;padding:20px;
+}
+#adminPanel.show{display:block;}
+.admin-wrap{max-width:460px;margin:40px auto;}
+.admin-header{font-size:22px;font-weight:800;color:var(--yellow);margin-bottom:24px;letter-spacing:-0.5px;}
+.admin-section{margin-bottom:24px;}
+.admin-sec-label{font-size:11px;color:var(--muted);letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;font-weight:600;}
+.admin-gen-btn{
+  width:100%;padding:13px;border-radius:10px;border:none;
+  background:var(--yellow);color:#000;font-size:14px;
+  font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:8px;
+}
+.admin-gen-btn.blue{background:var(--blue);color:#000;}
+.admin-key-display{
+  background:var(--code);border:1px solid var(--border);border-radius:10px;
+  padding:16px;font-family:'Courier New',monospace;font-size:20px;
+  color:var(--green);text-align:center;letter-spacing:4px;
+  display:none;margin-bottom:8px;word-break:break-all;
+}
+.admin-copy-btn{
+  width:100%;padding:10px;border-radius:8px;
+  border:1px solid rgba(34,197,94,0.3);background:transparent;
+  color:var(--green);font-size:13px;cursor:pointer;
+  font-family:inherit;display:none;margin-bottom:16px;
+}
+.keys-list{
+  background:var(--code);border:1px solid var(--border);
+  border-radius:10px;padding:14px;max-height:260px;overflow-y:auto;
+}
+.key-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:10px 0;border-bottom:1px solid var(--border);
+}
+.key-row:last-child{border-bottom:none;}
+.key-val{font-family:'Courier New',monospace;font-size:12px;color:var(--green);}
+.key-plan-tag{font-size:10px;color:var(--yellow);background:rgba(247,223,30,0.1);padding:2px 6px;border-radius:4px;margin-left:6px;}
+.key-exp{font-size:11px;color:var(--muted);}
+.key-del{color:#f87171;cursor:pointer;font-size:16px;padding:0 4px;}
+.admin-close-btn{
+  width:100%;padding:13px;border-radius:10px;
+  border:1px solid var(--border);background:transparent;
+  color:var(--muted);font-size:14px;cursor:pointer;
+  font-family:inherit;margin-top:10px;
+}
+
+/* ANIMATIONS */
+.fade-up{opacity:0;transform:translateY(24px);transition:opacity 0.6s,transform 0.6s;}
+.fade-up.visible{opacity:1;transform:none;}
+@media(max-width:640px){
+  .hero-stats{flex-wrap:wrap;}
+  .hstat{border-right:none;border-bottom:1px solid var(--border);}
+  .hstat:last-child{border-bottom:none;}
+  .features-grid{grid-template-columns:1fr;}
+  footer{flex-direction:column;text-align:center;}
+  .cta-section{padding:40px 24px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ LANDING ═══ -->
+<div id="landingPage">
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo"><span class="js">JS</span><span class="rest"> Pro MZ</span></a>
+    <div class="nav-links">
+      <a href="#curriculum" class="nav-link">Currículo</a>
+      <a href="#precos" class="nav-link">Preços</a>
+      <button class="nav-cta" onclick="showLoginModal()">Entrar</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">🇲🇿 Plataforma Nº1 em Moçambique</div>
+  <h1>Aprende <span class="accent">JavaScript</span><br>de verdade</h1>
+  <p class="hero-desc">
+    De <strong>variáveis</strong> até <strong>APIs reais</strong> — aprende com exercícios práticos, editor de código integrado e quizzes interactivos. Em português, para o mercado moçambicano.
+  </p>
+  <div class="hero-actions">
+    <button class="btn-primary" onclick="startFree()">▶ Começar gratuitamente</button>
+    <button class="btn-secondary" onclick="document.getElementById('curriculum').scrollIntoView({behavior:'smooth'})">Ver currículo →</button>
+  </div>
+  <div class="hero-stats">
+    <div class="hstat"><div class="hstat-n">6</div><div class="hstat-l">Módulos</div></div>
+    <div class="hstat"><div class="hstat-n">40+</div><div class="hstat-l">Lições</div></div>
+    <div class="hstat"><div class="hstat-n">100+</div><div class="hstat-l">Exercícios</div></div>
+    <div class="hstat"><div class="hstat-n">PT</div><div class="hstat-l">Português</div></div>
+  </div>
+
+  <!-- CODE WINDOW -->
+  <div class="code-window fade-up" style="transition-delay:0.2s">
+    <div class="code-titlebar">
+      <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+      <span class="code-filename">introducao.js</span>
+    </div>
+    <div class="code-body">
+<span class="line"><span class="cm">// 🇲🇿 Bem-vindo ao JS Pro MZ!</span></span>
+<span class="line"> </span>
+<span class="line"><span class="kw">const</span> <span class="var">estudante</span> <span class="op">=</span> {</span>
+<span class="line">  nome<span class="op">:</span> <span class="str">"Claudio"</span><span class="op">,</span></span>
+<span class="line">  pais<span class="op">:</span> <span class="str">"Moçambique"</span><span class="op">,</span></span>
+<span class="line">  nivel<span class="op">:</span> <span class="str">"Iniciante"</span></span>
+<span class="line">}<span class="op">;</span></span>
+<span class="line"> </span>
+<span class="line"><span class="kw">function</span> <span class="fn">boasVindas</span><span class="op">(</span><span class="var">e</span><span class="op">)</span> {</span>
+<span class="line">  <span class="kw">return</span> <span class="str">`Olá, ${e.nome}! Começa a aprender JS hoje! 🚀`</span><span class="op">;</span></span>
+<span class="line">}</span>
+<span class="line"> </span>
+<span class="line"><span class="fn">console</span><span class="op">.</span><span class="fn">log</span><span class="op">(</span><span class="fn">boasVindas</span><span class="op">(</span><span class="var">estudante</span><span class="op">));</span></span>
+<span class="line"><span class="cm">// → Olá, Claudio! Começa a aprender JS hoje! 🚀</span><span class="cursor-blink"></span></span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FEATURES -->
+<div class="section fade-up">
+  <div class="section-label">Porquê JS Pro MZ</div>
+  <div class="section-title">Tudo o que precisas<br>para aprender JS</div>
+  <div class="features-grid" style="margin-top:40px">
+    <div class="feat">
+      <div class="feat-icon">⚡</div>
+      <h3>Editor de Código Integrado</h3>
+      <p>Escreve e executa JavaScript directamente no browser. Vê o output em tempo real sem instalar nada.</p>
+    </div>
+    <div class="feat">
+      <div class="feat-icon">🧠</div>
+      <h3>Quizzes Interactivos</h3>
+      <p>Testa os teus conhecimentos após cada lição com quizzes que dão feedback imediato e explicam o porquê.</p>
+    </div>
+    <div class="feat">
+      <div class="feat-icon">📈</div>
+      <h3>Progresso & XP</h3>
+      <p>Ganha pontos de experiência a cada lição concluída. Sobe de nível de Iniciante a Expert.</p>
+    </div>
+    <div class="feat">
+      <div class="feat-icon">🇲🇿</div>
+      <h3>100% em Português</h3>
+      <p>Conteúdo criado em português moçambicano. Sem barreiras linguísticas, aprende no teu idioma.</p>
+    </div>
+    <div class="feat">
+      <div class="feat-icon">📱</div>
+      <h3>Funciona no Telemóvel</h3>
+      <p>Optimizado para Android e iOS. Aprende onde quiseres, mesmo com internet lenta.</p>
+    </div>
+    <div class="feat">
+      <div class="feat-icon">💼</div>
+      <h3>Projectos Reais</h3>
+      <p>No plano PRO, aplicas o que aprendes em projectos reais com APIs e deploy para o mercado.</p>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- CURRICULUM -->
+<div class="section fade-up" id="curriculum">
+  <div class="section-label">Currículo</div>
+  <div class="section-title">6 módulos do zero<br>ao profissional</div>
+  <p class="section-desc">Cada módulo tem lições em vídeo, exercícios práticos e quiz. Completa ao teu ritmo.</p>
+  <div class="curriculum">
+    <div class="module"><div class="module-header"><div class="module-num mn-1">01</div><div class="module-info"><div class="module-title">Fundamentos JavaScript</div><div class="module-sub">8 lições · Variáveis, tipos, operadores, strings</div></div><span class="module-tag tag-free">GRÁTIS</span></div></div>
+    <div class="module"><div class="module-header"><div class="module-num mn-2">02</div><div class="module-info"><div class="module-title">Controlo de Fluxo</div><div class="module-sub">7 lições · if/else, loops for/while, switch</div></div><span class="module-tag tag-free">GRÁTIS</span></div></div>
+    <div class="module"><div class="module-header"><div class="module-num mn-3">03</div><div class="module-info"><div class="module-title">Funções & Scope</div><div class="module-sub">8 lições · Arrow functions, closures, callbacks</div></div><span class="module-tag tag-pro">PRO</span></div></div>
+    <div class="module"><div class="module-header"><div class="module-num mn-4">04</div><div class="module-info"><div class="module-title">Arrays & Objectos</div><div class="module-sub">7 lições · map, filter, reduce, desestruturação</div></div><span class="module-tag tag-pro">PRO</span></div></div>
+    <div class="module"><div class="module-header"><div class="module-num mn-5">05</div><div class="module-info"><div class="module-title">DOM & Eventos</div><div class="module-sub">6 lições · Manipular HTML, eventos, formulários</div></div><span class="module-tag tag-pro">PRO</span></div></div>
+    <div class="module"><div class="module-header"><div class="module-num mn-6">06</div><div class="module-info"><div class="module-title">APIs & Projecto Final</div><div class="module-sub">6 lições · Fetch, JSON, projecto completo</div></div><span class="module-tag tag-pro">PRO</span></div></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- TESTIMONIALS -->
+<div class="section fade-up">
+  <div class="section-label">Testemunhos</div>
+  <div class="section-title">O que dizem os<br>nossos estudantes</div>
+  <div class="testi-grid">
+    <div class="testi">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"Nunca pensei que fosse conseguir aprender programação. O JS Pro MZ explica tudo de forma simples. Já construí o meu primeiro site!"</p>
+      <div class="testi-author"><div class="testi-avatar">J</div><div><div class="testi-name">João Machava</div><div class="testi-role">Estudante · Maputo</div></div></div>
+    </div>
+    <div class="testi">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"O editor de código integrado é incrível. Pratico directamente no telemóvel durante o trajecto para o trabalho. Recomendo a todos!"</p>
+      <div class="testi-author"><div class="testi-avatar">A</div><div><div class="testi-name">Ana Sitoi</div><div class="testi-role">Técnica de TI · Beira</div></div></div>
+    </div>
+    <div class="testi">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"Tentei aprender JavaScript em inglês mas era muito difícil. Em português é completamente diferente. Em 3 meses já estou a freelancer!"</p>
+      <div class="testi-author"><div class="testi-avatar">C</div><div><div class="testi-name">Carlos Nhantumbo</div><div class="testi-role">Freelancer · Nampula</div></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- PRICING -->
+<div class="section fade-up" id="precos">
+  <div class="section-label">Preços</div>
+  <div class="section-title">Simples e transparente</div>
+  <p class="section-desc">Começa grátis hoje. Actualiza quando quiseres.</p>
+  <div class="pricing-grid">
+    <div class="plan">
+      <div class="plan-name">Grátis</div>
+      <div class="plan-price"><span class="curr">MT</span> 0</div>
+      <div class="plan-period">Para sempre</div>
+      <ul class="plan-features">
+        <li><span class="ic">✅</span><span class="on">2 módulos completos</span></li>
+        <li><span class="ic">✅</span><span class="on">Editor de código</span></li>
+        <li><span class="ic">✅</span><span class="on">Quizzes básicos</span></li>
+        <li><span class="ic">✅</span><span class="on">Sistema de XP</span></li>
+        <li><span class="ic">❌</span><span class="off">Módulos avançados</span></li>
+        <li><span class="ic">❌</span><span class="off">Projectos reais</span></li>
+      </ul>
+      <button class="plan-btn-free" onclick="startFree()">Começar grátis</button>
+    </div>
+    <div class="plan featured">
+      <div class="plan-badge">POPULAR</div>
+      <div class="plan-name">PRO</div>
+      <div class="plan-price"><span class="curr">MT</span> 200</div>
+      <div class="plan-period">por mês</div>
+      <ul class="plan-features">
+        <li><span class="ic">✅</span><span class="on">Todos os 6 módulos</span></li>
+        <li><span class="ic">✅</span><span class="on">Editor de código</span></li>
+        <li><span class="ic">✅</span><span class="on">Quizzes completos</span></li>
+        <li><span class="ic">✅</span><span class="on">Sistema de XP</span></li>
+        <li><span class="ic">✅</span><span class="on">Projectos reais</span></li>
+        <li><span class="ic">✅</span><span class="on">Suporte WhatsApp</span></li>
+      </ul>
+      <button class="plan-btn-pro" onclick="showBuyModal()">Assinar PRO — 200 MT</button>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section fade-up">
+  <h2>Começa hoje.<br>É grátis.</h2>
+  <p>Junta-te a centenas de moçambicanos que já aprendem JavaScript com o JS Pro MZ.</p>
+  <div class="cta-btns">
+    <button class="btn-primary" onclick="startFree()">▶ Começar gratuitamente</button>
+    <button class="btn-secondary" onclick="showBuyModal()">Ver plano PRO</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo"><span class="js">JS</span> Pro MZ</div>
+  <div class="footer-text">© 2025 JS Pro MZ · Todos os direitos reservados</div>
+  <div class="footer-flag">🇲🇿 Feito em Moçambique</div>
+</footer>
+
+</div><!-- end landing -->
+
+<!-- ═══ MODALS ═══ -->
+
+<!-- LOGIN -->
+<div class="modal-overlay" id="loginModal">
+  <div class="modal">
+    <div class="modal-close" onclick="closeModal('loginModal')">✕</div>
+    <h3>Entrar</h3>
+    <p class="modal-sub">Insere a tua senha de acesso PRO</p>
+    <div class="field-err" id="loginErr">❌ Senha incorrecta ou expirada.</div>
+    <div class="field-label">Senha de acesso</div>
+    <input type="text" class="field-input" id="pwInput" placeholder="XXXX-XXXX-XXXX" autocomplete="off">
+    <button class="modal-btn" onclick="doLogin()">⚡ Entrar</button>
+    <button class="modal-btn-ghost" onclick="closeModal('loginModal');startFree()">Continuar grátis →</button>
+    <div class="admin-small" onclick="openAdminLogin()">⚙ admin</div>
+  </div>
+</div>
+
+<!-- ADMIN LOGIN -->
+<div class="modal-overlay" id="adminLoginModal">
+  <div class="modal">
+    <div class="modal-close" onclick="closeModal('adminLoginModal')">✕</div>
+    <h3>Admin</h3>
+    <p class="modal-sub">Acesso restrito</p>
+    <div class="field-err" id="adminErr">❌ Senha incorrecta.</div>
+    <div class="field-label">Senha admin</div>
+    <input type="password" class="field-input" id="adminPwInput" placeholder="••••••••" style="letter-spacing:4px">
+    <button class="modal-btn" onclick="doAdminLogin()">🔐 Entrar como Admin</button>
+    <button class="modal-btn-ghost" onclick="closeModal('adminLoginModal')">← Cancelar</button>
+  </div>
+</div>
+
+<!-- BUY -->
+<div class="modal-overlay" id="buyModal">
+  <div class="modal">
+    <div class="modal-close" onclick="closeModal('buyModal')">✕</div>
+    <h3>Assinar PRO</h3>
+    <p class="modal-sub">200 MT · Acesso completo por 30 dias</p>
+    <div class="modal-step"><strong>Valor:</strong> 200 MT — 30 dias de acesso PRO</div>
+    <div class="modal-step"><strong>1.</strong> Envia <strong>200 MT</strong> via M-Pesa ou E-mola ao admin</div>
+    <div class="modal-step"><strong>2.</strong> Clica abaixo e envia o comprovativo pelo WhatsApp</div>
+    <div class="modal-step"><strong>3.</strong> Recebes a senha em menos de <strong>30 minutos ⚡</strong></div>
+    <button class="wp-btn" onclick="goWhatsApp()">💬 PROSSEGUIR COM O PAGAMENTO</button>
+    <button class="modal-btn-ghost" onclick="closeModal('buyModal')">← Voltar</button>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="adminPanel">
+  <div class="admin-wrap">
+    <div class="admin-header">⚙️ Painel Admin</div>
+    <div class="admin-section">
+      <div class="admin-sec-label">Gerar senha PRO — 30 dias</div>
+      <button class="admin-gen-btn" onclick="genKey('pro',30)">🔑 Gerar Senha PRO 30 Dias</button>
+      <div class="admin-sec-label" style="margin-top:8px">Gerar senha PRO — 7 dias</div>
+      <button class="admin-gen-btn blue" onclick="genKey('pro',7)">🔑 Gerar Senha PRO 7 Dias</button>
+      <div class="admin-key-display" id="adminKeyDisplay"></div>
+      <button class="admin-copy-btn" id="adminCopyBtn" onclick="copyAdminKey()">⎘ Copiar Senha</button>
+    </div>
+    <div class="admin-section">
+      <div class="admin-sec-label">Senhas activas</div>
+      <div class="keys-list" id="keysList"><div style="color:#334;font-size:12px;text-align:center;padding:10px">Nenhuma senha activa</div></div>
+    </div>
+    <button class="admin-close-btn" onclick="document.getElementById('adminPanel').classList.remove('show')">← Fechar Admin</button>
+  </div>
+</div>
+
+<!-- ═══ MAIN APP ═══ -->
+<div id="mainApp">
+  <div class="app-nav">
+    <div class="app-nav-inner">
+      <div class="app-logo"><span class="js">JS</span> Pro MZ</div>
+      <div class="app-right">
+        <span class="plan-chip" id="planChip">FREE</span>
+        <button class="app-logout" onclick="doLogout()">Sair</button>
+      </div>
+    </div>
+  </div>
+  <div class="app-content">
+    <div id="dashboard">
+      <div class="app-hero">
+        <div class="app-hello">Bem-vindo, <span id="helloName">Estudante</span> 👋</div>
+        <div class="app-sub">Continua de onde paraste. Cada lição conta.</div>
+      </div>
+      <div class="progress-card">
+        <div class="prog-row">
+          <span class="prog-title">Progresso geral</span>
+          <span class="prog-pct" id="progPct">0%</span>
+        </div>
+        <div class="prog-bar"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
+        <div class="prog-stats">
+          <div class="prog-stat">XP: <span id="xpDisplay">0</span></div>
+          <div class="prog-stat">Nível: <span id="levelDisplay">Iniciante</span></div>
+          <div class="prog-stat">Lições: <span id="lessonsDisplay">0 / 5</span></div>
+        </div>
+      </div>
+      <div class="modules-title">Módulos</div>
+      <div class="app-modules" id="appModules"></div>
+    </div>
+    <div id="lessonView">
+      <div class="lesson-nav">
+        <button class="back-btn" onclick="showDashboard()">← Voltar</button>
+        <div class="lesson-heading" id="lessonHeading"></div>
+      </div>
+      <div id="lessonBody"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── CONFIG ──
+const ADMIN_PASS='admin2026';
+const WP='258847888166';
+
+// ── DATA ──
+const MODS=[
+  {id:1,name:'Fundamentos JS',color:'#f7df1e',free:true,lessons:[
+    {id:1,title:'Variáveis',
+     theory:'<h4>O que são variáveis?</h4><p>Variáveis são como caixas que guardam informação. Em JavaScript moderno usamos <strong>const</strong> (não muda) e <strong>let</strong> (pode mudar).</p>',
+     code:'const nome = "Claudio";\nlet idade = 20;\nconst pais = "Moçambique";\n\nconsole.log(nome);\nconsole.log(idade);\nconsole.log(pais);',
+     ex:'Declara uma const chamada "cidade" com o valor "Maputo" e imprime-a.',
+     hint:'const cidade = "Maputo";\nconsole.log(cidade);',
+     quiz:{q:'Qual keyword usas para uma variável que NÃO muda?',opts:['let','var','const','function'],c:2}},
+    {id:2,title:'Tipos de Dados',
+     theory:'<h4>Tipos em JavaScript</h4><p>JS tem vários tipos: <strong>string</strong> (texto), <strong>number</strong> (número), <strong>boolean</strong> (true/false), <strong>null</strong> e <strong>undefined</strong>.</p>',
+     code:'const texto = "Olá MZ";\nconst numero = 42;\nconst verdade = true;\nconst nada = null;\n\nconsole.log(typeof texto);   // string\nconsole.log(typeof numero);  // number\nconsole.log(typeof verdade); // boolean',
+     ex:'Cria 3 variáveis com tipos diferentes e usa typeof em cada uma.',
+     hint:'const a = "texto";\nconst b = 10;\nconst c = true;\nconsole.log(typeof a, typeof b, typeof c);',
+     quiz:{q:'typeof "JS Pro MZ" retorna...?',opts:['number','string','boolean','object'],c:1}},
+    {id:3,title:'Operadores',
+     theory:'<h4>Operadores em JS</h4><p>Usamos <strong>+, -, *, /</strong> para cálculos e <strong>===, !==, >, <</strong> para comparações. O operador <strong>%</strong> dá o resto da divisão.</p>',
+     code:'const a = 10, b = 3;\nconsole.log(a + b);  // 13\nconsole.log(a - b);  // 7\nconsole.log(a * b);  // 30\nconsole.log(a / b);  // 3.33\nconsole.log(a % b);  // 1\nconsole.log(a === b); // false',
+     ex:'Calcula a área de um rectângulo 8×5 e imprime o resultado.',
+     hint:'const area = 8 * 5;\nconsole.log("Área:", area);',
+     quiz:{q:'O que retorna 10 % 3?',opts:['3','1','3.3','0'],c:1}}
+  ]},
+  {id:2,name:'Controlo de Fluxo',color:'#38bdf8',free:true,lessons:[
+    {id:4,title:'If / Else',
+     theory:'<h4>Condições</h4><p>O <strong>if/else</strong> permite que o teu programa tome decisões. Se a condição for verdadeira executa um bloco, senão executa outro.</p>',
+     code:'const nota = 75;\n\nif (nota >= 50) {\n  console.log("Aprovado ✅");\n} else {\n  console.log("Reprovado ❌");\n}\n\n// Múltiplas condições:\nif (nota >= 90) {\n  console.log("Excelente!");\n} else if (nota >= 70) {\n  console.log("Bom!");\n} else {\n  console.log("Continua a praticar");\n}',
+     ex:'Verifica se a temperatura é maior que 30. Se sim imprime "Quente!", senão "Fresco!".',
+     hint:'const temp = 35;\nif (temp > 30) {\n  console.log("Quente!");\n} else {\n  console.log("Fresco!");\n}',
+     quiz:{q:'Qual operador verifica igualdade estrita (valor e tipo)?',opts:['==','=','===','!='],c:2}},
+    {id:5,title:'Loop For',
+     theory:'<h4>Loop For</h4><p>O loop <strong>for</strong> repete código um número definido de vezes. Tem 3 partes: inicialização, condição e incremento.</p>',
+     code:'// Contar de 1 a 5:\nfor (let i = 1; i <= 5; i++) {\n  console.log("Número:", i);\n}\n\n// Percorrer array:\nconst cidades = ["Maputo", "Beira", "Nampula"];\nfor (let i = 0; i < cidades.length; i++) {\n  console.log(cidades[i]);\n}',
+     ex:'Usa um for para imprimir os números de 1 a 10.',
+     hint:'for (let i = 1; i <= 10; i++) {\n  console.log(i);\n}',
+     quiz:{q:'O que significa "i++" no loop for?',opts:['i menos 1','i dividir 2','i mais 1','i igual a 0'],c:2}}
+  ]}
+];
+
+// ── STATE ──
+let userPlan='free';
+let progress=JSON.parse(localStorage.getItem('jspro2_prog')||'{}');
+let xp=parseInt(localStorage.getItem('jspro2_xp')||'0');
+let quizDone={};
+
+function saveProgress(lid){
+  if(progress[lid])return;
+  progress[lid]=true;
+  xp+=50;
+  localStorage.setItem('jspro2_prog',JSON.stringify(progress));
+  localStorage.setItem('jspro2_xp',xp);
+  updateProgress();
+}
+
+function updateProgress(){
+  const total=MODS.reduce((a,m)=>a+m.lessons.length,0);
+  const done=Object.keys(progress).length;
+  const pct=Math.round(done/total*100);
+  const el=id=>document.getElementById(id);
+  if(el('progPct'))el('progPct').textContent=pct+'%';
+  if(el('progFill'))el('progFill').style.width=pct+'%';
+  if(el('xpDisplay'))el('xpDisplay').textContent=xp;
+  if(el('lessonsDisplay'))el('lessonsDisplay').textContent=done+' / '+total;
+  const lvls=['Iniciante','Básico','Intermédio','Avançado','Expert'];
+  if(el('levelDisplay'))el('levelDisplay').textContent=lvls[Math.min(Math.floor(xp/200),lvls.length-1)];
+}
+
+// ── NAVIGATION ──
+function startFree(){
+  userPlan='free';
+  sessionStorage.setItem('jspro2_plan','free');
+  sessionStorage.setItem('jspro2_on','1');
+  showApp();
+}
+function showLoginModal(){document.getElementById('loginModal').classList.add('show');}
+function showBuyModal(){document.getElementById('buyModal').classList.add('show');}
+function closeModal(id){document.getElementById(id).classList.remove('show');}
+function openAdminLogin(){closeModal('loginModal');document.getElementById('adminLoginModal').classList.add('show');}
+function goWhatsApp(){window.open('https://wa.me/'+WP+'?text='+encodeURIComponent('Olá! Quero assinar o JS Pro MZ por 200 MT (30 dias). Segue comprovativo:'),'_blank');}
+function doLogout(){sessionStorage.clear();document.getElementById('mainApp').style.display='none';document.getElementById('landingPage').style.display='block';}
+function showApp(){
+  document.getElementById('landingPage').style.display='none';
+  document.getElementById('mainApp').style.display='block';
+  closeModal('loginModal');
+  const chip=document.getElementById('planChip');
+  if(userPlan==='pro'){chip.textContent='⭐ PRO';chip.className='plan-chip chip-pro';}
+  else{chip.textContent='FREE';chip.className='plan-chip chip-free';}
+  renderModules();updateProgress();showDashboard();
+}
+function showDashboard(){document.getElementById('dashboard').style.display='block';document.getElementById('lessonView').style.display='none';}
+
+// ── MODULES ──
+function renderModules(){
+  const c=document.getElementById('appModules');c.innerHTML='';
+  MODS.forEach(m=>{
+    const free=m.free||userPlan==='pro';
+    const done=m.lessons.filter(l=>progress[l.id]).length;
+    const div=document.createElement('div');
+    div.className='app-mod'+(free?'':' locked');
+    div.innerHTML=`<div class="mod-dot" style="background:${m.color}"></div>
+    <div class="mod-info-wrap"><div class="mod-name">${m.name}</div>
+    <div class="mod-meta">${m.lessons.length} lições</div></div>
+    ${done===m.lessons.length&&done>0?'<div class="mod-done">✅ Completo</div>':
+      !free?'<span class="module-tag tag-pro" style="font-size:11px">PRO</span>':
+      `<span style="font-size:12px;color:#6b6b80">${done}/${m.lessons.length}</span>`}`;
+    div.onclick=()=>free?openModule(m):showBuyModal();
+    c.appendChild(div);
+  });
+}
+
+function openModule(mod){
+  document.getElementById('dashboard').style.display='none';
+  document.getElementById('lessonView').style.display='block';
+  document.getElementById('lessonHeading').textContent=mod.name;
+  const body=document.getElementById('lessonBody');body.innerHTML='';
+  if(!mod.free&&userPlan!=='pro'){
+    body.innerHTML=`<div class="locked-card"><h3>🔒 Módulo PRO</h3><p>Este módulo requer o plano PRO — <strong>200 MT/mês</strong>. Acede a todos os 6 módulos, projectos reais e suporte.</p><button class="unlock-btn" onclick="showBuyModal()">⭐ Assinar PRO — 200 MT</button></div>`;
+    return;
+  }
+  mod.lessons.forEach((l,i)=>{
+    const div=document.createElement('div');
+    div.className='lesson-card';
+    div.style.marginBottom='16px';
+    const done=progress[l.id];
+    div.innerHTML=`
+      <h4 style="display:flex;justify-content:space-between">Lição ${i+1}: ${l.title} ${done?'<span style="color:var(--green);font-size:12px">✅</span>':''}</h4>
+      <div style="margin:12px 0">${l.theory}</div>
+      <div style="font-size:11px;color:var(--muted);letter-spacing:2px;margin-bottom:8px;font-weight:600">EXEMPLO:</div>
+      <div class="lesson-code-block">${l.code.replace(/</g,'&lt;')}</div>
+      <div class="exercise-label">Exercício</div>
+      <div class="exercise-desc">${l.ex}</div>
+      <textarea class="code-editor" id="ed${l.id}" placeholder="// Escreve o teu código aqui...">${done?l.hint:''}</textarea>
+      <button class="run-code-btn" onclick="runCode(${l.id})">▶ Executar</button>
+      <div class="output" id="out${l.id}"></div>
+      <div class="quiz-block" style="margin-top:16px">
+        <div class="quiz-q-label">Quiz</div>
+        <div class="quiz-question">${l.quiz.q}</div>
+        <div class="quiz-options" id="qz${l.id}">
+          ${l.quiz.opts.map((o,j)=>`<button class="quiz-opt" onclick="doQuiz(${l.id},${j},${l.quiz.c},this)">${o}</button>`).join('')}
+        </div>
+        <div class="quiz-feedback" id="qzfb${l.id}"></div>
+      </div>`;
+    body.appendChild(div);
+  });
+}
+
+function runCode(lid){
+  const code=document.getElementById('ed'+lid).value;
+  const out=document.getElementById('out'+lid);
+  out.classList.add('show');
+  const logs=[];
+  const fc={log:(...a)=>logs.push(a.join(' ')),error:(...a)=>logs.push('❌ '+a.join(' '))};
+  try{
+    new Function('console',code)(fc);
+    out.style.color='var(--green)';
+    out.innerHTML=logs.length?logs.join('<br>'):'<span style="color:var(--muted)">// Sem output</span>';
+  }catch(e){out.style.color='#f87171';out.innerHTML='❌ Erro: '+e.message;}
+}
+
+function doQuiz(lid,chosen,correct,btn){
+  const c=document.getElementById('qz'+lid);
+  if(c.dataset.done)return;c.dataset.done='1';
+  c.querySelectorAll('.quiz-opt').forEach(b=>b.disabled=true);
+  const fb=document.getElementById('qzfb'+lid);
+  if(chosen===correct){
+    btn.classList.add('correct');
+    fb.textContent='✅ Correcto! +50 XP';fb.className='quiz-feedback show ok';
+    saveProgress(lid);
+  }else{
+    btn.classList.add('wrong');
+    c.querySelectorAll('.quiz-opt')[correct].classList.add('correct');
+    fb.textContent='❌ Errado. Resposta correcta: '+c.querySelectorAll('.quiz-opt')[correct].textContent;
+    fb.className='quiz-feedback show no';
+  }
+}
+
+// ── AUTH ──
+function doLogin(){
+  const pw=document.getElementById('pwInput').value.trim().toUpperCase();
+  const err=document.getElementById('loginErr');
+  cleanKeys();const ks=getKeys();const m=ks.find(k=>k.key===pw);
+  if(m){err.classList.remove('show');userPlan=m.plan;sessionStorage.setItem('jspro2_plan',m.plan);sessionStorage.setItem('jspro2_on','1');showApp();}
+  else{err.classList.add('show');document.getElementById('pwInput').value='';}
+}
+
+function doAdminLogin(){
+  const pw=document.getElementById('adminPwInput').value;
+  const err=document.getElementById('adminErr');
+  if(pw===ADMIN_PASS){
+    closeModal('adminLoginModal');document.getElementById('adminPwInput').value='';
+    err.classList.remove('show');renderKeys();document.getElementById('adminPanel').classList.add('show');
+  }else{err.classList.add('show');document.getElementById('adminPwInput').value='';}
+}
+
+// ── KEY MANAGEMENT ──
+function getKeys(){try{return JSON.parse(localStorage.getItem('jspro2_keys')||'[]');}catch{return[];}}
+function saveKeysData(k){localStorage.setItem('jspro2_keys',JSON.stringify(k));}
+function cleanKeys(){const now=Date.now();saveKeysData(getKeys().filter(x=>x.exp>now));}
+function mkKey(){const c='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';let k='';for(let i=0;i<12;i++){if(i===4||i===8)k+='-';k+=c[Math.floor(Math.random()*c.length)];}return k;}
+function genKey(plan,days){
+  const key=mkKey();const exp=Date.now()+days*86400000;
+  const ks=getKeys();ks.push({key,plan,exp});saveKeysData(ks);
+  document.getElementById('adminKeyDisplay').textContent=key;
+  document.getElementById('adminKeyDisplay').style.display='block';
+  document.getElementById('adminCopyBtn').style.display='block';
+  renderKeys();
+}
+function copyAdminKey(){
+  navigator.clipboard.writeText(document.getElementById('adminKeyDisplay').textContent).catch(()=>{});
+  document.getElementById('adminCopyBtn').textContent='✓ Copiado!';
+  setTimeout(()=>document.getElementById('adminCopyBtn').textContent='⎘ Copiar Senha',2000);
+}
+function renderKeys(){
+  const ks=getKeys();const box=document.getElementById('keysList');
+  if(!ks.length){box.innerHTML='<div style="color:#334155;font-size:12px;text-align:center;padding:10px">Nenhuma senha activa</div>';return;}
+  box.innerHTML=ks.map((k,i)=>{
+    const d=new Date(k.exp);
+    return`<div class="key-row"><div><div class="key-val">${k.key}<span class="key-plan-tag">${k.plan.toUpperCase()}</span></div><div class="key-exp">Expira: ${d.toLocaleDateString('pt-PT')} ${d.toLocaleTimeString('pt-PT',{hour:'2-digit',minute:'2-digit'})}</div></div><span class="key-del" onclick="delKey(${i})">🗑</span></div>`;
+  }).join('');
+}
+function delKey(i){const ks=getKeys();ks.splice(i,1);saveKeysData(ks);renderKeys();}
+
+// ── AUTO LOGIN ──
+(function(){
+  if(sessionStorage.getItem('jspro2_on')){
+    userPlan=sessionStorage.getItem('jspro2_plan')||'free';showApp();
+  }
+})();
+
+// ── SCROLL ANIMATIONS ──
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
+},{threshold:0.1});
+document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
